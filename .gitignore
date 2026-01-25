@@ -1,12 +1,42 @@
-HELP.md
-target/
-.mvn/wrapper/maven-wrapper.jar
+# =========================
+# Maven / Gradle
+# =========================
+/target/
+build/
 !**/src/main/**/target/
 !**/src/test/**/target/
-# Spring Boot config
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# =========================
+# Spring Boot
+# =========================
+HELP.md
 src/main/resources/application.properties
 
-### STS ###
+# =========================
+# Compiled files
+# =========================
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+*.zip
+*.tar.gz
+*.rar
+
+# =========================
+# Logs
+# =========================
+*.log
+hs_err_pid*
+replay_pid*
+
+# =========================
+# IDEs
+# =========================
+## STS
 .apt_generated
 .classpath
 .factorypath
@@ -15,22 +45,23 @@ src/main/resources/application.properties
 .springBeans
 .sts4-cache
 
-### IntelliJ IDEA ###
-.idea
+## IntelliJ
+.idea/
 *.iws
 *.iml
 *.ipr
 
-### NetBeans ###
+## VS Code
+.vscode/
+
+## NetBeans
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
 
-### VS Code ###
-.vscode/
-
+# =========================
+# OS
+# =========================
+.DS_Store
