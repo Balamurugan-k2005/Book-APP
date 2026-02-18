@@ -32,22 +32,25 @@ public class BookController {
     @DeleteMapping("/{id}")
     ResponseEntity<Void> deleteBook(@PathVariable("id") int id){
         bookService.deleteBook(id);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @GetMapping("/{id}")
     ResponseEntity<BookResponse> getBookById(@PathVariable("id") int id){
-        return ResponseEntity.ok(bookService.getBookById(id));
+        BookResponse bookResponse = bookService.getBookById(id);
+        return new ResponseEntity<>(bookResponse,HttpStatus.OK);
     }
 
     @GetMapping
     ResponseEntity<List<BookResponse>> getAllBooks(){
-        return ResponseEntity.ok( bookService.getAllBooks());
+        List<BookResponse> bookResponses =  bookService.getAllBooks();
+        return new ResponseEntity<>(bookResponses,HttpStatus.OK);
 
     }
 
     @GetMapping("/author/{author}")
     ResponseEntity<List<BookResponse>> getBookByAuthor(@PathVariable("author") String author){
-        return ResponseEntity.ok(bookService.getBookByAuthor(author));
+        List<BookResponse> bookResponses = bookService.getBookByAuthor(author);
+        return new ResponseEntity<>(bookResponses,HttpStatus.OK);
     }
 }

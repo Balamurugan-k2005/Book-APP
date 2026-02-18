@@ -2,6 +2,8 @@ package com.example.BookApp.service;
 
 import com.example.BookApp.dto.BookRequest;
 import com.example.BookApp.dto.BookResponse;
+import com.example.BookApp.exception.BookNotFoundException;
+import com.example.BookApp.exception.IdNotFoundException;
 import com.example.BookApp.model.Book;
 import com.example.BookApp.repository.BookRepository;
 import org.modelmapper.ModelMapper;
@@ -40,12 +42,16 @@ public class BookServiceImpl implements BookService{
 
     @Override
     public void deleteBook(int id) {
+        boolean book = bookRepository.existsById(id);
+        if(!book)
+            throw new IdNotFoundException("Book not found with this id : " + id);
         bookRepository.deleteById(id);
     }
 
     @Override
     public BookResponse getBookById(int id) {
-        Optional<Book> book = bookRepository.findById(id);
+        Book book = bookRepository.findById(id).orElseThrow(()->
+                new IdNotFoundException("Book not found with this id : " + id));
         return modelMapper.map(book, BookResponse.class);
     }
 
@@ -58,7 +64,12 @@ public class BookServiceImpl implements BookService{
     @Override
     public List<BookResponse> getBookByAuthor(String author) {
         List<Book> books = bookRepository.findByAuthor(author);
-        return books.stream().map(book -> modelMapper.map(book, BookResponse.class)).toList();
+
+        if(books.isEmpty()){
+            throw  new BookNotFoundException("no Book found with the author name : " + author);
+        }
+        return books.stream().map(book ->
+                modelMapper.map(book, BookResponse.class)).toList();
     }
 
     private String GenerateISBN(){
