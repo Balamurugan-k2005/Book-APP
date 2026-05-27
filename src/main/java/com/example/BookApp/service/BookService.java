@@ -71,7 +71,7 @@ public class BookService {
         List<Book> books = bookRepository.findByAuthor(author);
 
         if(books.isEmpty()){
-            throw  new BookNotFoundException("no Book found with the author name : " + author);
+            throw  new BookNotFoundException("No Book found with the author name : " + author);
         }
         return books.stream().map(book ->
                 modelMapper.map(book, BookResponse.class)).toList();
